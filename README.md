@@ -1,5 +1,5 @@
 <h2 align="center">极简网络验证Python3版</h2>
-<p align="center">一款轻量级的网络验证服务端应用程序，基于JSON改造的数据库，免去部署MySQL等数据库的烦恼，实现快速部署上线生产的目的。</p>
+<p>一款轻量级的网络验证服务端应用程序，基于JSON改造的数据库，免去部署MySQL等数据库的烦恼，实现快速部署上线生产的目的。</p>
 <h4 align="center">后台管理界面预览</h4>
 <p align="center">
 <img src="https://myimages.25531.com/20220915/iShot_2022-09-15_13.22.42.png" width="50%" height="50%" alt="Empty interface" />
