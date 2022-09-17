@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+{% block conent %}
+<div class="ui menu borderless">
+    <label class="item">用户列表：</label>
+
+    <div class="right item">
+        <div class="ui labeled icon input">
+            <label for="search" class="ui label">搜索：</label>
+            <input id="search" type="text" placeholder="机器码..." onkeydown="keypress(event);">
+            <i class="inverted circular search link icon"></i>
+        </div>
+    </div>
+</div>
+
+<table class="ui celled striped selectable table">
+    <thead>
+        <tr>
+            <th>机器码</th>
+            <th>到期时间</th>
+            <th>注册时间</th>
+            <th class="left aligned">操作</th>
+        </tr>
+    </thead>
+    {%for d in user_data%}
+    <tr>
+        <td>{{d[0]}}</td>
+        <td>
+            <div class="ui input right icon">
+                <i class="calendar icon"></i>
+                <input id="{{d[0]}}" type="text" value="{{d[1]}}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" style="cursor: pointer;">
+            </div>
+        </td>
+        <td>{{d[2]}}</td>
+        <td>
+            <i class="copy icon"></i>
+            <a href="#" class="btn" onclick="set_user_info('{{d[0]}}');">修改</a>
+            &ensp;&ensp;&ensp;&ensp;
+            <i class="trash alternate icon"></i>
+            <a class="delete" http="/admin/user_info/delete?key={{d[0]}}" href="#">删除</a>
+        </td>
+    </tr>
+
+    {%endfor%}
+</table>
+
+<div class="ui fluid buttons">
+    <button class="ui button" onclick="window.location.href = '?page={{page[0]}}'">首页</button>
+    <div class="or"></div>
+    <button class="ui button" onclick="window.location.href = '?page={{page[1]}}'">上一页</button>
+    <div class="or"></div>
+    <button class="ui button" onclick="window.location.href = '?page={{page[2]}}'">下一页</button>
+    <div class="or"></div>
+    <button class="ui button" onclick="window.location.href = '?page={{page[3]}}'">尾页</button>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        //ajax删除用户(使用$(document).on('click', '.delete', function () {可以有效解决ajax刷新后的删除事件失效问题)
+        $(document).on('click', '.delete', function () {
+            // $('.delete').click(function () {
+            var url = $(this).attr('http');
+            console.log(url);
+            $.ajax({
+                url: url,
+                type: 'GET',
+                success: function (data) {
+                    if (data['code'] == 10000) {
+                        alert('用户删除成功');
+                        window.location.reload();
+                    } else {
+                        alert('用户删除成功');
+                    }
+                }
+            });
+        });
+
+        //ajax搜索
+        $('.inverted.circular.search.link.icon').click(function () {
+            //取search的值
+            const search = $('#search').val();
+            if (search == '') {
+                alert('请输入需搜索的机器码');
+                //获取焦点
+                $('#search').focus();
+                return;
+            }
+            $.ajax({
+                url: '/admin/user_info/search',
+                type: 'GET',
+                data: {
+                    'key': search
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data['code'] == 10000) {
+                        var user_data = data['data'];
+                        var html = '';
+                        html += '<thead><tr><th>机器码</th><th>到期时间</th><th>注册时间</th><th class="left aligned">操作</th></tr></thead>';
+                        html += '<tr>';
+                        html += '<td>' + user_data[0] + '</td>';
+                        html += '<td>';
+                        html += '<div class="ui input right icon">';
+                        html += '<i class="calendar icon"></i>';
+                        html += '<input id="' + user_data[0] + '" type="text" value="' + user_data[1] + '" onclick="WdatePicker({dateFmt:\'yyyy-MM-dd HH:mm:ss\'})" style="cursor: pointer;">';
+                        html += '</div>';
+                        html += '</td>';
+                        html += '<td>' + user_data[2] + '</td>';
+                        html += '<td>';
+                        html += '<i class="copy icon"></i>';
+                        html += '<a href="#" class="btn" onclick="set_user_info(\'' + user_data[0] + '\');">修改</a>';
+                        html += '&ensp;&ensp;&ensp;&ensp;';
+                        html += '<i class="trash alternate icon"></i>';
+                        html += '<a class="delete" http="/admin/user_info/delete?key=' + user_data[0] + '" href="#">删除</a>';
+                        html += '</td>';
+                        html += '</tr>';
+                        $('.table').html(html);
+                    } else {
+                        alert('该用户不存在！');
+                    }
+
+                }
+            });
+        });
+    });
+    function set_user_info(id) {
+        // alert(id);
+        //取该id输入框的值
+        var datatime = document.getElementById(id).value;
+        // alert(datatime)
+        //ajax修改用户到期时间
+        $.ajax({
+            url: '/admin/user_info/update',
+            type: 'POST',
+            data: JSON.stringify({
+                'machine_code': id,
+                'expire_date': datatime
+            }),
+            success: function (data) {
+                if (data['code'] == 10000) {
+                    alert('修改成功');
+                    window.location.reload();
+                } else {
+                    alert('修改失败');
+                }
+            }
+        });
+    };
+    function keypress(e) {
+        var evt = window.event || e;
+        if (evt.keyCode == 13) {
+            //点击搜索
+            $('.inverted.circular.search.link.icon').click();
+        }
+    };
+</script>
+{% endblock %}

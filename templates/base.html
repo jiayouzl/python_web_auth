@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh">
+<!-- https://semantic-ui.com -->
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/static/jquery-3.6.1.min.js"></script>
+    <script src="/static/Semantic-UI-CSS/semantic.min.js"></script>
+    <script src="/static/clipboard.min.js"></script>
+    <script src="/static/My97DatePicker/WdatePicker.js"></script>
+    <link rel="stylesheet" href="/static/Semantic-UI-CSS/semantic.min.css">
+    <link rel="shortcut icon" href="/static/images/vip.png" type="image/x-icon"/>
+    <title>{{ title }}</title>
+</head>
+
+<body>
+    <div class="ui container">
+        <h1></h1>
+        <div class="ui message">
+            <i class="close icon"></i>
+            <div class="header">注意事项：</div>
+            <ul class="list">
+                <li>展示数据列表为数据库内容的倒序排序。</li>
+                <li>后台管理UI界面只是临时有想法要加的，没做的很细，纯手撸，但常用功能都做了，如遇Bug请至issues提交。</li>
+            </ul>
+        </div>
+
+        <div class="three ui buttons">
+            <button class="ui blue button" onclick="window.location.href = '/admin/user_info?page=1'">用户管理</button>
+            <div class="or"></div>
+            <button class="ui positive button" onclick="window.location.href = '/admin/card_info?page=1'">充值卡管理</button>
+            <div class="or"></div>
+            <button class="ui red button" onclick="window.location.href = '/admin/logout'">退出</button>
+        </div>
+
+        {% block conent %}
+        {% endblock %}
+
+        <h4 class="ui horizontal header divider">
+            <a href="https://github.com/jiayouzl/python_web_auth" target="_blank">❤ 由 ZhangLei 设计和编码 ❤</a>
+        </h4>
+
+    </div>
+</body>
+
+</html>
+<script type="text/javascript">
+    $(document).ready(function () {
+        new ClipboardJS('.btn');
+        $('.ui.dropdown').dropdown();
+        $('.message .close')
+            .on('click', function () {
+                $(this)
+                    .closest('.message')
+                    .transition('fade');
+            });
+    });
+</script>

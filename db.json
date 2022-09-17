@@ -1,0 +1,19 @@
+{
+    "user": {
+        "1": {
+            "machine_code": "SAEEHKCMWZWYBEOQ",
+            "expire_date": "2021-12-31 13:29:59",
+            "reg_date": "2022-09-08 21:39:11"
+        }
+    },
+    "card": {
+        "1": {
+            "card_number": "20220902EPEHT",
+            "card_pass": "SAVXWOQM",
+            "days": 30,
+            "used": false,
+            "used_machine_code": "",
+            "used_time": ""
+        }
+    }
+}

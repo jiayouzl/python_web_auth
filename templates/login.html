@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/static/jquery-3.6.1.min.js"></script>
+    <script src="/static/Semantic-UI-CSS/semantic.min.js"></script>
+    <link rel="stylesheet" href="/static/Semantic-UI-CSS/semantic.min.css">
+    <title>后台登录</title>
+</head>
+
+<body>
+    <div class="ui middle aligned center aligned grid">
+        <div class="column">
+            <h2 class="ui teal image header">
+                <div class="content">
+                    登录到后台管理
+                </div>
+            </h2>
+            <form action="login" method="get" class="ui large form">
+                <div class="ui stacked segment">
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="user icon"></i>
+                            <input type="text" name="user" placeholder="User">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <div class="ui left icon input">
+                            <i class="lock icon"></i>
+                            <input type="password" name="pass" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="ui fluid large teal submit button">登录</div>
+                </div>
+
+                <div class="ui error message"></div>
+
+            </form>
+
+            <!-- <div class="ui message">
+                New to us? <a href="#">Sign Up</a>
+            </div> -->
+        </div>
+    </div>
+</body>
+
+</html>
+
+<style type="text/css">
+    body {
+        background-color: #DADADA;
+    }
+
+    body>.grid {
+        height: 100%;
+    }
+
+    .image {
+        margin-top: -100px;
+    }
+
+    .column {
+        max-width: 450px;
+    }
+</style>
+<script type="text/javascript">
+    $(document)
+        .ready(function () {
+            $('.ui.form')
+                .form({
+                    fields: {
+                        user: {
+                            identifier: 'user',
+                            rules: [
+                                {
+                                    type: 'empty',
+                                    prompt: '请输入管理员账号'
+                                },
+                                {
+                                    type: 'length[5]',
+                                    prompt: '管理员账号必须至少10个字符'
+                                }
+                            ]
+                        },
+                        password: {
+                            identifier: 'password',
+                            rules: [
+                                {
+                                    type: 'empty',
+                                    prompt: '请输入管理员密码'
+                                },
+                                {
+                                    type: 'length[5]',
+                                    prompt: '管理员密码必须至少10个字符'
+                                }
+                            ]
+                        }
+                    }
+                })
+                ;
+        })
+        ;
+</script>
