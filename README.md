@@ -85,6 +85,9 @@ http://domain:8081/admin/login
 ## 安装(Python≥3.7)
 - clone the repo
 - cd into the repo directory
+- mkdir venv
+- virtualenv venv
+- source venv/bin/activate
 - pip3 install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
 - python3 app.py
 
