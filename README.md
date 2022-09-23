@@ -102,7 +102,8 @@ cd python_web_auth
 docker build -t wlyz:v1 .
 
 # 运行镜像(~/python3/docker_volumes/wlyz_data改为你自己的路径)
-docker run -p 8081:8081 -itd -v ~/python3/docker_volumes/wlyz_data:/app/database wlyz:v1
+# 先把[database]目录下的[db.json]文件先拷贝至[~/python3/docker_volumes/wlyz_data]目录下。
+docker run -p 8081:8081 -itd -v ~/python3/docker_volumes/wlyz_data:/app/database:rw wlyz:v1
 
 # 测试访问(这个内网IP是我自己的，可能与你的不同，自行查找自己的内网IP地址)
 http://192.168.5.100:8081

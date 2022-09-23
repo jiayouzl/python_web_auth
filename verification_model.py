@@ -81,7 +81,7 @@ class verification(object):
                     if len(result_card_update) != 1:
                         # print('充值卡使用状态修改失败')
                         # 追加写入日志文件
-                        with open('error.log', 'a') as f:
+                        with open('./log/error.log', 'a') as f:
                             f.write(self.get_server_time() + '\t充值卡使用状态修改失败\t' + machine_code + '\t' + card_number + '\t' + card_pass + '\r\n')
                     return {'code': 10000, 'msg': '充值成功', 'expireDate': new_date_time}
                 else:
