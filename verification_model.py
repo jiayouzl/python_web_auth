@@ -14,9 +14,9 @@ class verification(object):
 
     def __init__(self) -> None:
         # 设置数据库文件
-        self.db_user = TinyDB('db.json', indent=4)
+        self.db_user = TinyDB('./database/db.json', indent=4)
         self.db_user.default_table_name = 'user'
-        self.db_card = TinyDB('db.json', indent=4)
+        self.db_card = TinyDB('./database/db.json', indent=4)
         self.db_card.default_table_name = 'card'
         # 设置时区
         self.tz = timezone(timedelta(hours=8))
