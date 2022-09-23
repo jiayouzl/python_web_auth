@@ -109,6 +109,13 @@ http://192.168.5.100:8081
 ```
 
 ## 交流群组
+
+### 进QQ群验证问答
+```
+问：这是什么？
+答：网络验证
+```
+
 <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=IyIaQmjYElaHExKSOzqf4gqY7YhKmDwk&jump_from=webapi"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="Python3网络验证交流群" title="Python3网络验证交流群"></a>
 
 ![QQ群二维码](/templates/static/images/qrcode-302.png "Python3网络验证交流群")
