@@ -55,15 +55,13 @@ curl --request POST \
 ```
 
 #### 后台管理(默认账号：`admin` 默认密码：`admin888`)
-```
-http://domain:8081/admin/login
-```
+[http://domain:8081/admin/login](http://domain:8081/admin/login)
 
 ## 开发环境
 
 1. macOS `12.6` / Ubuntu Desktop `22.04`
 2. Python `3.9.14`
-3. VS Code `1.71.2` / PyCharm `2022.2.1`
+3. VS Code `1.71.2` / PyCharm `2022.2.2`
 4. Sanic `22.6.2`
 
 ## 文件说明
@@ -82,7 +80,9 @@ http://domain:8081/admin/login
 └── verification_model.py       网络验证核心库类
 ```
 
-## 安装(Python≥3.7)
+## 安装&运行
+
+### 本地克隆运行方式(Python≥3.7)
 - clone the repo
 - cd into the repo directory
 - mkdir venv
@@ -90,6 +90,23 @@ http://domain:8081/admin/login
 - source venv/bin/activate
 - pip3 install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
 - python3 app.py
+
+### docker运行方式
+```
+git clone https://github.com/jiayouzl/python_web_auth.git
+# docker怎么安装？百度或谷歌吧
+
+cd python_web_auth
+
+# 编译镜像
+docker build -t wlyz:v1 .
+
+# 运行镜像(~/python3/docker_volumes/wlyz_data改为你自己的路径)
+docker run -p 8081:8081 -itd -v ~/python3/docker_volumes/wlyz_data:/app/database wlyz:v1
+
+# 测试访问(这个内网IP是我自己的，可能与你的不同，自行查找自己的内网IP地址)
+http://192.168.5.100:8081
+```
 
 ## 交流群组
 <a target="_blank" href="https://qm.qq.com/cgi-bin/qm/qr?k=IyIaQmjYElaHExKSOzqf4gqY7YhKmDwk&jump_from=webapi"><img border="0" src="https://pub.idqqimg.com/wpa/images/group.png" alt="Python3网络验证交流群" title="Python3网络验证交流群"></a>
