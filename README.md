@@ -94,7 +94,7 @@ curl --request POST \
 ### docker运行方式
 ```
 git clone https://github.com/jiayouzl/python_web_auth.git
-# docker怎么安装？百度或谷歌吧
+# docker怎么安装？百度或谷歌吧~
 
 cd python_web_auth
 
