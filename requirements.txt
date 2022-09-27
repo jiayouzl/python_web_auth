@@ -1,4 +1,6 @@
+pycryptodome==3.15.0
 python-dotenv==0.21.0
+requests==2.28.1
 sanic==22.6.2
 sanic_ext==22.6.3
 sanic_session==0.8.0
