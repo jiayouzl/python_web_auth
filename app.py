@@ -86,7 +86,14 @@ async def login(request: Request):
     if sign != _sign:
         return json({'code': 10014, 'msg': '非法的签名'})
     result = verify.login(parametes['machineCode'])
-    return json(result)
+    
+    #aes加密返回数据
+    key = 'vqwn3p22uics8xv8'  # 16位
+    iv = 's0Q~ioZ(AYJxyvLQ'  # 16位
+    aes = AEScryptor(key=key, iv=iv, paddingMode='ZeroPadding', characterSet='utf-8')
+    rData = aes.encryptFromString(str(result))
+    # print('密文：', rData.toBase64())
+    return text(rData.toBase64())
 
 
 @app.post('/recharge')

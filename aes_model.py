@@ -59,14 +59,14 @@ class MData(object):
 class AEScryptor(object):
 
     def __init__(self, key, mode=AES.MODE_CBC, iv='', paddingMode="NoPadding", characterSet="utf-8"):
-        '''
+        """
         构建一个AES对象
         key: 秘钥，字节型数据
         mode: 使用模式，只提供两种，AES.MODE_CBC, AES.MODE_ECB
         iv： iv偏移量，字节型数据
         paddingMode: 填充模式，默认为NoPadding, 可选NoPadding，ZeroPadding，PKCS5Padding，PKCS7Padding
         characterSet: 字符集编码
-        '''
+        """
         self.key = key.encode(characterSet)
         self.mode = mode
         self.iv = iv.encode(characterSet)
@@ -123,59 +123,59 @@ class AEScryptor(object):
             print("不支持Padding")
 
     def setCharacterSet(self, characterSet):
-        '''
+        """
         设置字符集编码
         characterSet: 字符集编码
-        '''
+        """
         self.characterSet = characterSet
 
     def setPaddingMode(self, mode):
-        '''
+        """
         设置填充模式
         mode: 可选NoPadding，ZeroPadding，PKCS5Padding，PKCS7Padding
-        '''
+        """
         self.paddingMode = mode
 
     def decryptFromBase64(self, entext):
-        '''
+        """
         从base64编码字符串编码进行AES解密
         entext: 数据类型str
-        '''
+        """
         mData = MData(characterSet=self.characterSet)
         self.data = mData.fromBase64(entext)
         return self.__decrypt()
 
     def decryptFromHexStr(self, entext):
-        '''
+        """
         从hexstr编码字符串编码进行AES解密
         entext: 数据类型str
-        '''
+        """
         mData = MData(characterSet=self.characterSet)
         self.data = mData.fromHexStr(entext)
         return self.__decrypt()
 
     def decryptFromString(self, entext):
-        '''
+        """
         从字符串进行AES解密
         entext: 数据类型str
-        '''
+        """
         mData = MData(characterSet=self.characterSet)
         self.data = mData.fromString(entext)
         return self.__decrypt()
 
     def decryptFromBytes(self, entext):
-        '''
+        """
         从二进制进行AES解密
         entext: 数据类型bytes
-        '''
+        """
         self.data = entext
         return self.__decrypt()
 
     def encryptFromString(self, data):
-        '''
+        """
         对字符串进行AES加密
         data: 待加密字符串，数据类型为str
-        '''
+        """
         self.data = data.encode(self.characterSet)
         return self.__encrypt()
 
@@ -206,8 +206,8 @@ class AEScryptor(object):
 
 
 if __name__ == '__main__':
-    key = 'vqwn3p22uics8xv8'  #16位
-    iv = 's0Q~ioZ(AYJxyvLQ'  #16位
+    key = 'vqwn3p22uics8xv8'  # 16位
+    iv = 's0Q~ioZ(AYJxyvLQ'  # 16位
     aes = AEScryptor(key=key, iv=iv, paddingMode='ZeroPadding', characterSet='utf-8')
 
     data = '好好学习111!@#$%^&*()_+'
