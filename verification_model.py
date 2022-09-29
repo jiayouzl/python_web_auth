@@ -43,11 +43,11 @@ class verification(object):
         if result not in [None, []]:
             # 判断该机器码是否过期
             if result[0]['expire_date'] > datetime.now(self.tz).strftime('%Y-%m-%d %H:%M:%S'):
-                return {'code': 10000, 'msg': '机器码未过期', 'expireDate': result[0]['expire_date']}
+                return {'code': 10000, 'msg': '机器码未过期', 'expireDate': result[0]['expire_date'], 'nowtime': int(time.time())}
             else:
-                return {'code': 10011, 'msg': '机器码已过期', 'expireDate': result[0]['expire_date']}
+                return {'code': 10011, 'msg': '机器码已过期', 'expireDate': result[0]['expire_date'], 'nowtime': int(time.time())}
         else:
-            return {'code': 10010, 'msg': '机器码不存在'}
+            return {'code': 10010, 'msg': '机器码不存在', 'nowtime': int(time.time())}
 
     # 机器码充值
     def recharge(self, machine_code: str, card_number: str, card_pass: str):

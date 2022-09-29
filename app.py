@@ -1,6 +1,7 @@
 # -*- coding: UTF-8 -*-
 import os
 import sys
+import hashlib
 from datetime import datetime, timedelta, timezone
 from distutils.util import strtobool
 from pathlib import Path
@@ -12,6 +13,7 @@ from sanic_ext import Extend, render
 from sanic_session import InMemorySessionInterface, Session
 
 from verification_model import verification
+from aes_model import AEScryptor
 
 app = Sanic('MyApp')
 app.static('/static', './templates/static', name='get_static')
@@ -38,7 +40,7 @@ async def get_request_middleware(request):
         if not strtobool(os.getenv('NETWORK_AUTH')):
             return json({'code': 10000, 'msg': '未开启网络验证直接通过验证', 'expireDate': '2099-12-31 23:59:59'})
     # 截取到admin分类请求的路径进行权限认证
-    if len(request.path.split('/')) == 3:  #防止IndexError: list index out of range报错
+    if len(request.path.split('/')) == 3:  # 防止IndexError: list index out of range报错
         if request.path.split('/')[1] == 'admin' and request.path.split('/')[2] != 'login':
             if not strtobool(os.getenv('DEBUG')):  # 如果DEBUG模式等于True直接跳过登录验证
                 # print('get session:', request.ctx.session.get('admin_login_status'))
@@ -50,15 +52,6 @@ async def get_request_middleware(request):
 @app.get('/')
 async def index(request: Request):
     return html('欢迎使用极简网络验证Python3版</br>作者：@jiayouzl</br>Github：<a href="https://github.com/jiayouzl/python_web_auth" target="_blank">点击访问</a></br>服务器时间：' + verify.get_server_time() + '</br>服务器Python版本：' + sys.version)
-
-
-'''
-curl --request POST \
-  --url http://127.0.0.1:8081/reg \
-  --data '{
-	"machineCode": "12345abcde"
-}'
-'''
 
 
 @app.post('/reg')
@@ -77,31 +70,30 @@ async def reg(request: Request):
     return json(result)
 
 
-'''
-curl --request POST \
-  --url http://127.0.0.1:8081/login \
-  --data '{
-	"machineCode": "12345abcde"
-}'
-'''
-
-
 @app.post('/login')
 async def login(request: Request):
     parametes = request.json
+    # Api接口签名认证
+    key = 'rrm652gz4atq7jqc'
+    timestamp = request.headers.get('timestamp')
+    sign = request.headers.get('sign')
+    if not timestamp or not sign:
+        return json({'code': 10013, 'msg': '非法的签名'})
+    _sign_str = parametes['machineCode'] + timestamp + key
+    _sign = hashlib.md5(_sign_str.encode(encoding='utf-8')).hexdigest()
+    # print(sign)
+    # print(_sign)
+    if sign != _sign:
+        return json({'code': 10014, 'msg': '非法的签名'})
     result = verify.login(parametes['machineCode'])
-    return json(result)
-
-
-'''
-curl --request POST \
-  --url http://127.0.0.1:8081/recharge \
-  --data '{
-    "machineCode": "12345abcde",
-    "card_number": "20220915RWLLG",
-    "card_password": "OGPVQZSV"
-}'
-'''
+    
+    #aes加密返回数据
+    key = 'vqwn3p22uics8xv8'  # 16位
+    iv = 's0Q~ioZ(AYJxyvLQ'  # 16位
+    aes = AEScryptor(key=key, iv=iv, paddingMode='ZeroPadding', characterSet='utf-8')
+    rData = aes.encryptFromString(str(result))
+    # print('密文：', rData.toBase64())
+    return text(rData.toBase64())
 
 
 @app.post('/recharge')
