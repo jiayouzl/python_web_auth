@@ -81,6 +81,8 @@ curl --request POST \
 │   ├── login.html              管路员登录
 │   ├── static                  第三方js库目录
 │   └── user_info.html          机器码管理
+├── Dockerfile                  docker Dockerfile文件
+├── aes_model.py                AEC加解密类
 └── verification_model.py       网络验证核心库类
 ```
 
