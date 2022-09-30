@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
+import hashlib
 import os
 import sys
-import hashlib
 from datetime import datetime, timedelta, timezone
 from distutils.util import strtobool
 from pathlib import Path
@@ -12,8 +12,8 @@ from sanic.response import Request, html, json, redirect, text
 from sanic_ext import Extend, render
 from sanic_session import InMemorySessionInterface, Session
 
-from verification_model import verification
 from aes_model import AEScryptor
+from verification_model import verification
 
 app = Sanic('MyApp')
 app.static('/static', './templates/static', name='get_static')
