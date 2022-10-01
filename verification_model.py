@@ -75,8 +75,11 @@ class verification(object):
                 if len(result_user_update) == 1:
                     # 修改充值卡使用状态
                     # yapf: disable
-                    result_card_update = self.db_card.update({'used': True, 'used_machine_code': result_user.get('machine_code'), 'used_time': datetime.now(self.tz).strftime('%Y-%m-%d %H:%M:%S')},
-                                                             Query().card_number == card_number and Query().card_pass == card_pass)
+                    result_card_update = self.db_card.update({
+                            'used': True,
+                            'used_machine_code': result_user.get('machine_code'),
+                            'used_time': datetime.now(self.tz).strftime('%Y-%m-%d %H:%M:%S')
+                        }, Query().card_number == card_number and Query().card_pass == card_pass)
                     # yapf: enable
                     if len(result_card_update) != 1:
                         # print('充值卡使用状态修改失败')
