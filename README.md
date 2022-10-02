@@ -20,7 +20,7 @@
 
 - ~~验证相关类接口加密返回数据~~
 - ~~登陆验证接口安全认证~~
-- 后台管理在增加一些常用功能(开发中..)
+- ~~后台管理在增加一些常用功能~~
 - ~~增加使用DEMO~~
 
 ## 接口文档
@@ -108,14 +108,19 @@ cd python_web_auth
 docker build -t wlyz:v1 .
 
 # 运行镜像(~/python3/docker_volumes/wlyz_data改为你自己的路径)
-# 先把[database]目录下的[db.json]文件先拷贝至[~/python3/docker_volumes/wlyz_data]目录下。
-docker run -p 8081:8081 -itd -v ~/python3/docker_volumes/wlyz_data:/app/database:rw wlyz:v1
+# 1.把[database]目录下的[db.json]文件先拷贝至[~/python3/docker_volumes/wlyz_data]目录下。
+# 2.把根目录下的[.env]文件先拷贝至[~/python3/docker_volumes]目录下。
+docker run --name wlyz -p 8081:8081 -itd -v ~/python3/docker_volumes/wlyz_data:/app/database:rw -v ~/python3/docker_volumes/.env:/app/.env:rw wlyz:v1
 
 # 测试访问(这个内网IP是我自己的，可能与你的不同，自行查找自己的内网IP地址)
 http://192.168.5.100:8081
 ```
 
 ## 更新记录
+`2022-10-02`
+1. 增加后台充值卡批量复制导出功能。
+<img src="https://myimages.25531.com/20221002/iShot_2022-10-02_15.11.28.png" style="zoom:20%;" />
+
 `2022-09-29`
 1. 增加认证接口签名加密认证。
 2. 增加认证接口结果加密返回，杜绝结果本地重写规则破解方式。

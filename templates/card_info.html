@@ -2,6 +2,30 @@
 {% block conent %}
 <div class="ui menu borderless">
     <label class="item">充值卡列表：</label>
+
+    <div class="right item">
+        <button class="ui black button">导出</button>
+        <div class="ui modal">
+            <!-- <i class="close icon"></i> -->
+            <div class="header">本页所有充值卡信息</div>
+            <div class="image content">
+                <div class="description">
+                    <!-- <div class="ui header">你可以选择要复制的充值卡信息并复制即可。</div> -->
+                    <div id="card_all_info">
+                        {%for d in card_data%}
+                        <p>
+                            <pre>卡号：{{d[0]}}密码：{{d[1]}}授权天数：{{d[2]}}天</pre>
+                        </p>
+                        {%endfor%}
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <div class="ui positive right labeled icon button btn" data-clipboard-target="#card_all_info">复制并关闭<i class="checkmark icon"></i></div>
+            </div>
+        </div>
+    </div>
+
     <div class="right item">
         <div class="ui labeled icon input">
             <label class="ui label">制作：</label>
@@ -33,6 +57,7 @@
             <button class="ui black button">生成</button>
         </div>
     </div>
+
     <div class="right item">
         <div class="ui labeled icon input">
             <label for="search" class="ui label">搜索：</label>
@@ -41,6 +66,7 @@
         </div>
     </div>
 </div>
+
 
 <table class="ui celled striped selectable table">
     <thead>
@@ -88,8 +114,17 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
+        //点击复制并关闭按钮
+        // $('.ui.positive.right.labeled.icon.button').click(function () {
+        //     alert('复制成功！');
+        // });
+        //点击导出按钮
+        $('.ui.black.button').eq(0).click(function () {
+            //semantic-ui显示弹出层
+            $('.ui.modal').modal('show');
+        });
         //点击生成按钮
-        $('.ui.black.button').click(function () {
+        $('.ui.black.button').eq(1).on('click', function () {
             var num = $('.ui.compact.selection.dropdown').eq(0).find('.text').text();
             var day = $('.ui.compact.selection.dropdown').eq(1).find('.text').text();
             // console.log(num, day);
