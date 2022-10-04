@@ -110,7 +110,7 @@ docker build -t wlyz:v1 .
 # 运行镜像(~/python3/docker_volumes/wlyz_data改为你自己的路径)
 # 1.把[database]目录下的[db.json]文件先拷贝至[~/python3/docker_volumes/wlyz_data]目录下。
 # 2.把根目录下的[.env]文件先拷贝至[~/python3/docker_volumes]目录下。
-docker run --name wlyz -p 8081:8081 -itd -v ~/python3/docker_volumes/wlyz_data:/app/database:rw -v ~/python3/docker_volumes/.env:/app/.env:rw wlyz:v1
+docker run --name wlyz -p 8081:8081 -itd -v ~/python3/docker_volumes/wlyz_data:/app/database:rw -v ~/python3/docker_volumes/.env:/app/.env:rw --restart=always wlyz:v1
 
 # 测试访问(这个内网IP是我自己的，可能与你的不同，自行查找自己的内网IP地址)
 http://192.168.5.100:8081
